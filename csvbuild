@@ -1,0 +1,3 @@
+#!/bin/bash
+cat $1 | awk -f gluco1.awk > /tmp/file1.csv
+cat header.csv /tmp/file1.csv > ~/glucose/bs.csv

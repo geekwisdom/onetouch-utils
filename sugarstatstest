@@ -1,0 +1,2 @@
+#!/bin/bash
+curl --basic --user BradDet:fizzle -F 'import_upload[brand]=SS' -F 'import_upload[uploaded_data]=@bs.csv' -F commit='Upload/Import Readings' http://manage.sugarstats.com/import_uploads/create

@@ -1,0 +1,4 @@
+#!/usr/bin/kermit +
+echo hello from \%0 \%1 \%2
+show args
+exit

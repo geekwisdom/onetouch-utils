@@ -1,0 +1,7 @@
+#!/bin/bash
+cd /home/adminbrad/glucose
+logfile=$1
+rm $logfile
+stopat=`date +%H:%M -d "+2 minutes"`
+echo $stopat
+/home/adminbrad/glucose/download2.kermit $logfile $stopat

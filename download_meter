@@ -1,0 +1,6 @@
+#!/bin/bash
+logfile=$1
+rm $logfile
+stopat=`date +%H:%M -d "+2 minutes"`
+echo $stopat
+./download.kermit $logfile $stopat

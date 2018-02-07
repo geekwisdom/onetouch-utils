@@ -1,0 +1,13 @@
+#!/bin/bash
+mkdir ~/glucose
+file=~/bsugar.csv
+lines=`cat $file | wc -l`
+echo $lines
+if [ "$lines" -gt 150 ] ; then
+fname=`date +%m-%d-%Y`
+cp $file ~/glucose/$fname.csv
+echo will delete meter
+resetmeter.kermit
+else
+echo will not delete meter
+fi 

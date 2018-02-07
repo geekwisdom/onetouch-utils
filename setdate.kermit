@@ -1,0 +1,16 @@
+#!/usr/bin/kermit +
+set input echo on
+echo Setting Meter Date as: \%1
+set modem type direct
+set line /dev/ttyS3
+set flow-control none
+set carrier-watch off
+set send timeout 20
+set send pause 100
+set output pacing 150
+sleep 5
+OUTPUT DM\?\13
+sleep 2
+OUTPUT DMT\%1
+sleep 5
+exit 0

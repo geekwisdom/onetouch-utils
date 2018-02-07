@@ -1,0 +1,51 @@
+#!/bin/bash
+meter=
+fname=`date +%Y%m%d`
+username=myusername
+pass=mypass
+echo Filename /tmp/$fname.csv
+if [ -s /tmp/$fname.csv ] ; then
+echo Already got data today..
+else
+cd /home/adminbrad/glucose
+rm bsugar.csv
+#sort lastsugar.csv > lastsugar_sorted.csv
+sort -n -k1.8,9 -k1.2 -k 1 lastsugar.csv > lastsugar_sorted.csv
+if [ "$1" == "" ] ; then
+echo Attempting to access device...
+/home/adminbrad/bin/download_meter$meter bsugar.csv
+else
+cp $1 bsugar.csv
+fi
+if [ -s bsugar.csv ] ; then
+unix2dos bsugar.csv
+cat bsugar.csv | awk -f gluco1.awk | sort -n -k1.8,9 -k1.2 -k 1 > bsugar_sorted.csv
+avg=`tail bsugar_sorted.csv | awk -f avg.awk`
+echo "$avg #diabetes http://manage.sugarstats.com/BradDet" > ~/tmpi/ping.post
+echo $avg > ~/tmpi/speakit.inf
+if [ -s lastsugar.csv ] ; then
+comm -23 bsugar_sorted.csv lastsugar_sorted.csv > /tmp/$fname.csv
+if [ -s /tmp/$fname.csv ] ; then
+	rm bs.csv
+	#/home/adminbrad/glucose/csvbuild /tmp/$fname.csv
+	cat header.csv /tmp/$fname.csv > /home/adminbrad/glucose/bs.csv
+	cd /home/adminbrad/glucose
+	unix2dos bs.csv
+	unix2dos bs.csv
+	curl --basic --user $username:$pass -F 'import_upload[brand]=SS' -F 'import_upload[uploaded_data]=@bs.csv' -F commit='Upload/Import Readings' http://manage.sugarstats.com/import_uploads/create
+	cp bsugar_sorted.csv lastsugar.csv
+fi
+else
+ echo first time run without lastsugar file, not importing exisitng entries!
+ cp bsugar.csv lastsugar.csv
+ echo run this file again to capture only new data from this point forward
+fi
+sleep 5
+/home/adminbrad/bin/meterlog_check$meter
+sleep 5
+newdate=`date "+%m/%d/%y %H:%M"`
+echo Attempting to set clock to $newdate
+/home/adminbrad/glucose/setdate$meter.kermit "$newdate"
+#onetouch -p /dev/ttyS0 -d lsotu -t $newdate
+fi
+fi

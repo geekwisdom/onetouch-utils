@@ -1,0 +1,4 @@
+#!/bin/bash
+newdate=`date "+%m/%d/%y %H:%M"`
+echo Attempting to set clock to $newdate
+./setdate.kermit "$newdate"

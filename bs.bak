@@ -1,0 +1,8 @@
+,,,,,,,,,,
+DATE_FORMAT =,MM/DD/YYYY,,,,,,,,,
+TIME_FORMAT =,24hour,,,,,,,,,
+Date / Time,Glucose (mg/dL or mmol/L),Tags/Event (/ separated - Optional),Comment (Optional),,,,,,,
+EDIT BELOW THIS LINE ONLY,,,,,,,,,
+04/12/2010 9:00,7.5,Before Breakfast/Waking Up,Example Entry 1,,,,,,,
+04/12/2010 11:00,10.2,,,,,,,,,
+04/12/2010 16:30,6,Before Dinner,Example Entry 3,,,,,,,

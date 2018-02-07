@@ -1,0 +1,19 @@
+set input echo on
+set terminal debug on
+set modem type direct
+set line /dev/ttyS3
+set flow-control none
+set carrier-watch off
+set send timeout 20
+set send pause 100
+set output pacing 150
+set session-log text
+log session myfile.log
+if fail exit 1
+sleep 5
+OUTPUT DM\?\13
+sleep 2
+OUTPUT DMP\13
+input /nomatch 00:18
+close session
+exit 0
